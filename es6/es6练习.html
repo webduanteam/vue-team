@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>es6练习</title>
+</head>
+<body>
+<h2>es6练习</h2>
+<script>
+ function sum( x, y, z) {
+   let total=0;
+   if(x)total+=x;
+   if(y)total+=y;
+   if(z)total+=z;
+   console.log(total)
+ }
+ sum(1 ,2, 3);
+ let sum1=(...m)=>{
+   let total=0;
+   for(var i of m){
+     console.log('total:${total}')
+   }
+ }
+ sum1(1,2,2,2)
+</script>
+</body>
+</html>
