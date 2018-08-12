@@ -1,7 +1,6 @@
 <template>
 <div>
   <NavHeader></NavHeader>
-
   <NavBread>
     <a >商品</a>
   </NavBread>
@@ -26,20 +25,18 @@
 
             <li ><a href="javascript:void(0)"  >全部</a></li>
 
-            <li ><a href="javascript:void(0)">0.00-100.00</a></li>
-            <li>100.00-500.00</li>
-            <li>500.00-1000.00</li>
-            <li>1000.00-8000.00</li>
+            <li v-for="item in price" ><a href="javascript:void(0)"  >{{item.startPrice}}-{{item.endPrice}}</a></li>
+
           </ul>
         </div>
 
 
         <div class="content_right">
-          <div class="content_item">
+          <div class="content_item" v-for="item in GoodsList">
 
-            <a href=""><img src="./../../static/3.jpg" class="item_img"></a>
-            <span class="item_name">小米6x</span>
-            <p class="item_price">1000.00￥</p>
+            <a href=""><img v-bind:src="'/static/'+item.productImg" class="item_img"></a>
+            <span class="item_name">{{item.productName}}</span>
+            <p class="item_price">{{item.productPrice}}</p>
            <div class="item_buy" >加入购物车</div>
           </div>
 
@@ -82,11 +79,29 @@
     export default {
         name: "goodslist",
       mounted(){
-        // this.getGoodsList();
+        this.getGoodsList();
       },
       data () {
         return {
-          msg: ''
+          GoodsList: [],
+           price:[
+             {
+               "startPrice":"0.00",
+               "endPrice":"100.00"
+             },
+             {
+               "startPrice":"100.00",
+               "endPrice":"500.00"
+             },
+             {
+               "startPrice":"500.00",
+               "endPrice":"1000.00"
+             },
+             {
+               "startPrice":"1000.00",
+               "endPrice":"8000.00"
+             },
+           ]
         }
       },
       components: {
@@ -113,8 +128,8 @@
                       priceLevel: '4'
                   }
               }).then((res) => {
-
-                this.msg=res.data
+                console.log(res.data);
+                this.GoodsList=res.data
               }).catch(function (error) {
                 console.log("失败")
               })
