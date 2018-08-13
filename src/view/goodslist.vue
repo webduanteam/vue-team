@@ -10,8 +10,8 @@
 
       <div class="main_sort">
         <div class="sort_content">
-          <span class="sort_jiantou" >&#xe765;</span>
-          <span >价格</span>
+          <span class="sort_jiantou"  :class="{sort_jiantou_turn:!orderFlag}">&#xe765;</span>
+          <span v-on:click="sortBy()">价格</span>
           <a href="">默认</a>
           <span>排序：</span>
         </div>
@@ -23,9 +23,11 @@
           <div class="content_title">价 格: </div>
           <ul class="filter">
 
-            <li ><a href="javascript:void(0)"  >全部</a></li>
+            <li v-on:click="setPriceLevel('all')" ><a href="javascript:void(0)"  v-bind:class="{'filter_current': pricechecked=='all'}"  v-on:click="pricechecked='all'">全部</a></li>
 
-            <li v-for="item in price" ><a href="javascript:void(0)"  >{{item.startPrice}}-{{item.endPrice}}</a></li>
+            <li v-for="(item,index) in price" @click="pricechecked=index" v-on:click="setPriceLevel(index)">
+              <a href="javascript:void(0)"  v-bind:class="{'filter_current':pricechecked==index}" >{{item.startPrice}}-{{item.endPrice}}
+              </a></li>
 
           </ul>
         </div>
@@ -101,7 +103,12 @@
                "startPrice":"1000.00",
                "endPrice":"8000.00"
              },
-           ]
+           ],
+          pricechecked:'all',
+          orderFlag:false,
+          priceLevel:'all',
+
+
         }
       },
       components: {
@@ -119,13 +126,13 @@
           //   this.$router.push({path:'/cart?goodsId=123'});
           // }
         // 请求数据测试方法
-          getGoodsList() {
+          getGoodsList( ) {
               axios.get("/goods/list", {
                   params: {
-                      page: 0,
-                      pageSize: 8,
-                      orderFlag: true,
-                      priceLevel: '4'
+                    page:0,
+                    pageSize:8,
+                    orderFlag:this.orderFlag,
+                    priceLevel:this.priceLevel,
                   }
               }).then((res) => {
                 console.log(res.data);
@@ -133,7 +140,17 @@
               }).catch(function (error) {
                 console.log("失败")
               })
-          }
+          },
+          sortBy(){
+          this.orderFlag=!this.orderFlag;
+          this.page=0;
+          this.getGoodsList(false);
+        },
+        setPriceLevel(index){
+          this.priceLevel=index;
+          this.page=0;
+          this.getGoodsList(false);
+        }
       }
     }
 </script>
