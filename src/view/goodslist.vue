@@ -126,7 +126,7 @@
           //   this.$router.push({path:'/cart?goodsId=123'});
           // }
         // 请求数据测试方法
-          getGoodsList( ) {
+          getGoodsList() {
               axios.get("/goods/list", {
                   params: {
                     page:0,

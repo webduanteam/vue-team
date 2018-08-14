@@ -17,6 +17,18 @@ module.exports = {
         // pathRewrite: {
         //   '^/api': ''
         // }
+      },
+      '/goods/*':{
+        target: 'http://hotemotion.fun:3389',
+
+      },
+      '/user':{
+        target: 'http://hotemotion.fun:3389',
+
+      },
+      '/user/*':{
+        target: 'http://hotemotion.fun:3389',
+
       }
     },
 
@@ -28,7 +40,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
