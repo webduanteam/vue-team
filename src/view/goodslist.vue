@@ -39,7 +39,7 @@
             <a href=""><img v-bind:src="'/static/'+item.productImg" class="item_img"></a>
             <span class="item_name">{{item.productName}}</span>
             <p class="item_price">{{item.productPrice}}</p>
-           <div class="item_buy" >加入购物车</div>
+           <div class="item_buy" @click="addToCar(item.productId)" >加入购物车</div>
           </div>
 
         </div>
@@ -52,6 +52,20 @@
   </main>
   <!--底部-->
   <NavFooter></NavFooter>
+  <modal v-show="modalShow" v-on:close="closeModal" >
+    <p slot="message" style="margin-left: 87px">请先登录，否则无法加入购物车</p>
+    <button slot="btnGroup" class="md_btn" style="margin-left: 90px" @click="closeModal"  >关闭</button>
+  </modal>
+  <modal v-show="modaCar" v-on:close="closeModal">
+    <div slot="message" class="confirm_tip">
+      <span>&#xe654;</span>
+      <p>加入购物车成功</p>
+    </div>
+    <div slot="btnGroup">
+      <button class="md_btn" @click="modaCar=false">继续购物</button>
+      <router-link  href="javascript:;" to="/car"><button class="md_btn mg_r">查看购物车</button></router-link>
+    </div>
+  </modal>
   <!--。。。。。。。。。。。。。。。。。。。。。。。。。-->
   <!--路由的练习-->
   <!--<div>-->
@@ -77,7 +91,7 @@
   import './../assets/goodList.css'
   import NavFooter from '@/components/NavFooter.vue'
   import NavBread from '@/components/NavBread.vue'
-  // import Modal from '@/components/Modal.vue'
+  import Modal from '@/components/Modal.vue'
     export default {
         name: "goodslist",
       mounted(){
@@ -107,6 +121,10 @@
           pricechecked:'all',
           orderFlag:false,
           priceLevel:'all',
+          modalShow:false,
+          modaCar:false,
+          msg:'1'
+
 
 
         }
@@ -115,7 +133,7 @@
         NavHeader,
         NavFooter,
         NavBread,
-      //   Modal,
+        Modal,
       },
       methods:{
           // jump () {
@@ -150,6 +168,23 @@
           this.priceLevel=index;
           this.page=0;
           this.getGoodsList(false);
+        },
+        addToCar(productId){
+          axios.post("/goods/addCar",{
+            productId:productId
+          }).then((res)=>{
+            if(res.data.status=='0'){
+
+            this.modaCar=true
+            }else {
+              this.modalShow=true
+            }
+          })
+        },
+        closeModal(){
+          this.modalShow=false;
+          this.modaCar=false;
+
         }
       }
     }

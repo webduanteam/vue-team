@@ -9,7 +9,7 @@
         <router-link  href="javascript:;" to="/car" class="shoppingcar" >&#xe63f;</router-link>
         <span v-if="nickName">{{nickName}}</span>
 
-        <a v-if="nickName">退出</a>
+        <a v-if="nickName" @click="logout">退出</a>
         <a @click="modelFlag=true" v-if="!nickName">登录</a>
 
         <div  ><router-link  href="javascript:;" to="/car" class="carCount1"></router-link></div>
@@ -55,10 +55,21 @@
 
       }
     },
-    mounted(){
 
-    },
+      mounted(){
+        this.checkLogin();
+      },
+
          methods :{
+           checkLogin(){
+             axios.get("/users/checkLogin").then((response)=>{
+               let res=response.data;
+               if(res.status=='0'){
+                 this.nickName=res.result.userName;
+
+               }
+             })
+           },
            login(){
              axios.post("/users/login",{
                userName:this.userName,
@@ -76,6 +87,20 @@
 
              }).catch(function (error) {
                console.log("失败")
+             })
+           },
+           logout(){
+             axios.post("/users/logout").then((response)=>{
+               let res=response.data;
+
+               if(res.status=="0"){
+
+                 this.nickName='';
+                 this.userName='';
+                 this.userPwd='';
+                 // this.errorTip=false;
+
+               }
              })
            },
           }

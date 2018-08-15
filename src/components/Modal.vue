@@ -2,7 +2,6 @@
   <div class="modal_container">
     <div class="modal" >
       <a href="javascript:(0)" class="md_close" @click="closeModal">×</a>
-
       <div class="md_content" >
         <div class="confirm_tip"  >
           <slot name="message"></slot>
@@ -12,13 +11,15 @@
         </div>
       </div>
     </div>
-    <div class="mask" @click="closeModal" ></div>
+    <div class="mask"  ></div>
+
   </div>
 </template>
 
 <script>
     export default {
       prpos:["modalShow"],
+
       data(){
         return{};
       },
