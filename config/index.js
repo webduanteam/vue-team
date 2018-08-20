@@ -12,22 +12,22 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/goods/list': {
-        target: 'http://hotemotion.fun:3389',
+        target: 'http://linyijiu.cn:3000',
         changeOrigin: true
         // pathRewrite: {
         //   '^/api': ''
         // }
       },
       '/goods/*':{
-        target: 'http://hotemotion.fun:3389',
+        target: 'http://linyijiu.cn:3000',
 
       },
       '/user':{
-        target: 'http://hotemotion.fun:3389',
+        target: 'http://linyijiu.cn:3000',
 
       },
       '/user/*':{
-        target: 'http://hotemotion.fun:3389',
+        target: 'http://linyijiu.cn:3000',
 
       }
     },

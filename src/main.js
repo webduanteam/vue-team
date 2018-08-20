@@ -3,8 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
-Vue.config.productionTip = false
+import  {currency} from "./util/currency";
+Vue.config.productionTip = false;
+Vue.filter("currency",currency);
 
 /* eslint-disable no-new */
 new Vue({

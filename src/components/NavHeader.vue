@@ -7,12 +7,11 @@
       </div>
       <div class="header_login" >
         <router-link  href="javascript:;" to="/car" class="shoppingcar" >&#xe63f;</router-link>
-        <span v-if="nickName">{{nickName}}</span>
 
+        <span v-if="nickName">{{nickName}}</span>
         <a v-if="nickName" @click="logout">退出</a>
         <a @click="modelFlag=true" v-if="!nickName">登录</a>
-
-        <div  ><router-link  href="javascript:;" to="/car" class="carCount1"></router-link></div>
+        <div  ><router-link  href="javascript:;" to="/car" class="carCount1" v-if="nickName"></router-link></div>
       </div>
     </div>
     <div class="modal" v-if="modelFlag" >
