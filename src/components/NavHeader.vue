@@ -11,7 +11,7 @@
         <span v-if="nickName">{{nickName}}</span>
         <a v-if="nickName" @click="logout">退出</a>
         <a @click="modelFlag=true" v-if="!nickName">登录</a>
-        <div  ><router-link  href="javascript:;" to="/car" class="carCount1" v-if="nickName"></router-link></div>
+        <div class="carCount" ><router-link  href="javascript:;" to="/car" class="carCount1" v-if="nickName">12</router-link></div>
       </div>
     </div>
     <div class="modal" v-if="modelFlag" >
@@ -42,6 +42,7 @@
 
 <script>
   import './../assets/login.css'
+  import store from './../Vuex/store'
   import axios from 'axios'
   export default {
     data(){
@@ -57,7 +58,9 @@
 
       mounted(){
         this.checkLogin();
+        this.getCarCount()
       },
+
 
          methods :{
            checkLogin(){
@@ -80,6 +83,7 @@
                  this.errorTip=false,
                  this.nickName=res.result.userName
                   this.modelFlag=false
+
                } else {
             this.errorTip=true
                }
@@ -97,11 +101,27 @@
                  this.nickName='';
                  this.userName='';
                  this.userPwd='';
-                 // this.errorTip=false;
+                 this.errorTip=false;
 
                }
              })
            },
+           getCarCount(){
+             var carCount=0;
+             axios.get('/users/carList').then((response)=> {
+               var res= response.data;
+               // console.log(res)
+               var carList=[];
+               if(res.status=='0'){
+                 carList=res.result;
+                 carList.forEach((item)=>{
+                   carCount+=item.productNum;
+                 });
+                 store.commit("updateCartCount",carCount);
+               }
+             })
+
+           }
           }
 
   }
